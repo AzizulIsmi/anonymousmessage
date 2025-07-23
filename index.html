@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suara Siswa - SMA Negeri 2 Pinrang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <!-- menambah gambar-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+ 
+  <!-- STYLE DASAR AGAR TERLIHAT LEBIH BAGUS TAMPILANNYA -->
+ <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #f7f7f7; overflow-x: hidden; }
+
+    header {
+      background: linear-gradient(90deg, #6dd5ed, #2193b0);
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+     
+    /* KUMPULAN BACKGROUND DI WEBSITENYA */
+    #home { background-image: url('Bck.png'); background-size: cover; }
+    #about { background-image: url('Bck.png'); background-size: cover; }
+    #contact { background-image: url('Bck.png'); background-size: cover; }
+    #login { background-image: url('Bck.png'); background-size: cover; }
+    #kotak { background-image: url('Bck.png'); background-size: cover; }
+    #edukasi { background-image: url('Bck.png'); background-size: cover; }
+
+    /* UNTUK CARD NYA BIAR ADA KOTAKNYA DIBAGIAN CONTACT */
+    .card {
+      background-color: #ffffffbe;
+      border-radius: 12px;
+      box-shadow: 10px 4px 12px rgba(141, 141, 141, 0.853);
+      padding: 50px;
+      margin: 20px auto;
+      max-width: 500px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card1 {
+      color: #00c3ff;
+      background-color: #ffffffbe;
+      border-radius: 12px;
+      box-shadow: 10px 4px 12px rgba(167, 248, 255, 0.853);
+      padding: 50px;
+      margin: 20px auto;
+      max-width: 800px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* LOGO UNTUK ITU YANG DI HEADER */
+    .logo { font-size: 26px; font-weight: bold; color: white; gap: 20px;}
+    
+    /* ITU YANG KAYAK HOME, ABOUT AS, CONTACT, LOGIN */
+    nav { display: flex; gap: 20px; }
+    nav a { text-decoration: none; color: white; font-weight: 600; transition: 0.3s; }
+    nav a:hover { color: #00c3ff; background-color: #ffffff; border-radius: 30px; padding: 5px;}
+
+    /*BIAR ADA TAMPILAN 3 BARIS*/
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: #84effd;
+        flex-direction: column;
+        display: none;
+        padding: 10px 0;
+      }
+      .logo { 
+      font-size: 20px; 
+      font-weight: bold; 
+      color: white; }
+
+      nav.active { display: flex; }
+      .hamburger { display: flex; }
+      .hero1 { width: 25px;
+      height: 3px;
+
+      }
+      .hero-text button, /* Tombol "Mulai Bercerita" */
+      #kotak form button, /* Tombol Submit Aduan, Saran, Curhat */
+      #login button       /* Tombol Login Admin */
+      {
+        display: block;      /* Jadikan tombol elemen blok agar 'margin: auto' berfungsi */
+        margin: 10px auto;   /* Pusatkan tombol secara horizontal */
+        width: 90%;          /* Jadikan tombol lebih panjang. Sesuaikan persentase ini sesuai keinginan. */
+        max-width: 200px;    /* Batasi lebar maksimum agar tidak terlalu lebar di layar tablet */
+        text-align: center;  /* PENTING: Pastikan teks di dalam tombol juga terpusat */
+        padding: 12px 10px;  /* Opsional: Sesuaikan padding untuk tampilan yang lebih baik dengan lebar baru */
+        font-size: 14px;     /* Opsional: Perbesar ukuran font jika tombol lebih besar */
+      }
+      .hero1 {
+        margin: 30px auto;   /* Pusatkan tombol secara horizontal */
+        width: 90%;          /* Jadikan tombol lebih panjang. Sesuaikan persentase ini sesuai keinginan. */
+        max-width: 400px;    /* Batasi lebar maksimum agar tidak terlalu lebar di layar tablet */
+        text-align: center;  /* PENTING: Pastikan teks di dalam tombol juga terpusat */
+      }
+    }
+
+   /* BIAR BEDA BEDA HALAMAN, NDA SATU HALAMAN YANG BISA DI SCROLL */
+    .container { padding: 100px 30px; min-height: 90vh; display: none; animation: fadeIn 0.8s; }
+    .active { display: block; }
+
+    /* SEPERTI CARD TAPI UNTUK HALAMAN PERTAMA, YANG SELAMAT DATANG */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* background: linear-gradient(#ffffff00, #dbe9f400); */
+      padding: 50px;
+    }
+    .hero1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero2 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 10px;
+      margin: 15px;
+    }
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    h3 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+/* UNTUK WARNA MAUPUN UKURAN TEXT */
+    .hero-text { max-width: 50%; }
+    .hero-text h1 { color: #0b3d91; font-size: 48px; margin-bottom: 20px; }
+    .hero-text p { font-size: 18px; margin-bottom: 20px; }
+    .hero img { max-width: 30%; border-radius: 10px; }
+    .hero1 img { max-width: 15%; border-radius: 4px; }
+    .hero2 img { max-width: 100%; border-radius: 4px; }
+
+/* UNTUK TOMBOL TOMBOL SAMA KOLOM KOLOM KALAU MAU KASIH MASUK SESUATU */
+    form { max-width: 700px; margin: 20px auto; background: #ffffffc7; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    
+    form input, form textarea {
+      width: 100%; margin-bottom: 15px; padding: 10px;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+    form button, button {
+      background: linear-gradient(135deg, #00c3ff);
+      color: #333;
+      border: none;
+      padding: 10px 40px;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+    form button:hover, button:hover {
+      background: linear-gradient(135deg, #15f987);
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-color: #0b3d91;
+      color: #000000;
+    }
+    form button:active, button:active {transform: scale(0.95);}
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; text-align: center; }
+      .hero-text .hero img { max-width: 70%;}
+      .hero-text .hero2 img { max-width: 80%;}
+      .container { padding: 24px;}
+      .hero-text h1 { font-size: 24px; }
+      .hero-text p {font-size: 16px;}
+    }
+    /* FOOTER YANG DIBAWAH E */
+    footer { text-align: center; padding: 20px; background: linear-gradient(90deg, #6dd5ed, #2193b0); font-size: 14px; color: #ffffff; margin-top: 20px; }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">Anonymous message Azizul</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="navLinks">
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('about')">About Us</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+      <a href="#" onclick="showPage('login')">Login Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- SELECTION HOME NYA -->
+  <section id="home" class="container active">
+    <div class="hero">
+      <img src="JURNAL.png" alt="Gambar SMA"> <div class="hero-text">
+        <h1 style="color: #00c3ff;">Selamat Datang di web pesan anonim untuk Azizul</h1>
+        <p style="color: #ffffff;"><strong>Platform digital untuk mengetahui curhatan maupun pertanyaan kalian untuk saya!</strong></p>
+        <button onclick="showPage('kotak')">Mulai</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- SELECTION ABOUT AS NYA -->
+  <section id="about" class="container">
+    <div class="hero2">
+    </div>
+    <br>
+    <div class="card1">
+    <h2><i class="fas fa-info-circle me-2"></i> Apa itu Website anonymous message</h2>
+    <p style="text-align:justify; max-width: 730px; margin: 20px auto; color: #080808;">
+      Web anonymous message atau pesan anonim adalah sebuah situs yang memungkinkan seseorang menerima pesan dari orang lain tanpa mengetahui siapa pengirimnya. Melalui situs ini, seseorang dapat membagikan tautan khusus yang bisa diakses oleh siapa saja untuk mengirimkan pesan secara rahasia. Pengguna tidak perlu login atau menyebutkan identitas saat mengirim pesan, sehingga mereka merasa lebih bebas untuk menyampaikan perasaan, pendapat, saran, atau bahkan kritik dengan jujur.
+
+Biasanya, web pesan anonim digunakan untuk berinteraksi secara terbuka namun tetap menjaga kerahasiaan identitas pengirim. Pemilik tautan akan menerima pesan tersebut dan dapat membacanya melalui halaman khusus yang bersifat pribadi. Web semacam ini sering digunakan oleh pelajar, mahasiswa, atau pengguna media sosial yang ingin mengetahui pendapat jujur dari orang lain tanpa tekanan sosial.
+
+Meskipun memiliki manfaat dalam mendorong keterbukaan, penggunaan web pesan anonim juga memiliki risiko. Karena pengirim tidak diketahui, kadang muncul pesan negatif atau tidak pantas seperti hinaan atau ujaran kebencian. Oleh karena itu, penting bagi pembuat atau pengelola web jenis ini untuk menyertakan fitur keamanan seperti filter kata kasar, moderasi pesan, atau batas karakter.
+
+Secara keseluruhan, web anonymous message adalah media yang menarik untuk menciptakan ruang komunikasi yang lebih bebas dan jujur, selama digunakan secara bijak dan bertanggung jawab. <br> <br>
+    </div>
+
+    <div class="card1">
+    <h2><i class="fas fa-info-circle me-2"></i> Keunggulan</h2>
+    <p style="text-align:justify; max-width: 730px; margin: 20px auto; color: #080808;">
+      Web anonymous message memiliki beberapa keunggulan yang menjadikannya populer di kalangan pengguna internet, terutama generasi muda. Salah satu keunggulan utamanya adalah dapat mendorong kejujuran. Karena identitas pengirim disembunyikan, orang cenderung lebih berani menyampaikan pendapat, kritik, atau perasaan yang sulit diutarakan secara langsung. Hal ini membuka ruang komunikasi yang lebih terbuka dan jujur, tanpa rasa takut akan penilaian atau tekanan sosial. Selain itu, web ini juga membantu pengguna untuk melakukan introspeksi diri melalui masukan atau saran yang diterima secara anonim. Dari sisi teknis, penggunaannya sangat mudah dan tidak memerlukan proses login atau pendaftaran, cukup dengan mengakses tautan dan menuliskan pesan. Privasi baik pengirim maupun penerima tetap terjaga, sehingga interaksi terasa aman dan nyaman. Web ini juga sangat cocok dibagikan melalui media sosial seperti Instagram atau WhatsApp, sehingga memudahkan dalam menjangkau lebih banyak orang. Dengan tidak adanya batasan siapa yang dapat mengirim pesan, seseorang bisa menerima sudut pandang dari berbagai kalangan, menjadikan komunikasi lebih luas dan beragam.
+<br><br></p>
+    </div>
+    <div class="card1">
+    <h2><i class="fas fa-info-circle me-2"></i> Tujuan</h2>
+    <p style="text-align:justify; max-width: 730px; margin: 20px auto; color: #080808;">
+      Tujuan dari web anonymous message adalah untuk menyediakan ruang komunikasi yang bebas, terbuka, dan jujur tanpa mengungkapkan identitas pengirim pesan. Dengan adanya sistem anonim, orang merasa lebih nyaman dalam menyampaikan pendapat, perasaan, saran, maupun kritik tanpa takut dihakimi atau menyinggung pihak lain. Web ini dirancang agar pengguna bisa menerima pesan secara langsung dari siapa saja, baik teman, kenalan, maupun orang asing, sehingga dapat membuka perspektif baru dalam melihat diri sendiri atau memahami bagaimana orang lain memandangnya. Selain itu, web pesan anonim juga bertujuan untuk membangun komunikasi yang lebih sehat dan terbuka, mendorong keberanian dalam menyampaikan isi hati, serta membantu seseorang mengenali kekuatan dan kelemahan diri melalui tanggapan yang diterima.<br><br></p>
+    </div>
+    <h3 style="text-align:center; color: #00c3ff;">
+    <br>
+     <strong> Anonymous message Azizul</strong>
+    </h3>
+  </section>
+
+<!-- SELECTION CONTACT NYA -->
+  <section id="contact" class="container">
+    <div style="text-align:center; color: #ffffff;">
+    <h2><i class="fas fa-phone me-2"></i> Hubungi Kami</h2>
+    </div>
+
+    <div class="card">
+    <div style="text-align:center;">
+      <p style="color: #000000b2;"><strong><i class="fas fa-phone me-2"></i>  WhatsApp:</strong>
+        <a href="https://wa.me/6285126713963" target="_blank">+62 851-2671-3963</a></p> <br>
+      <p style="color: #000000b2;"><strong><i class="fa-brands fa-instagram me-2"></i>  Instagram:</strong>
+        <a href="https://instagram.com/smandupi.official" target="_blank">@mhmmdazzl_</a></p><br>
+    </div>
+    </div>
+    <div style="text-align:center;">
+
+    </div>
+  </section>
+
+   <!-- SELECTION KOTAK ISI HATINYA -->
+  <section id="kotak" class="container">
+
+    <div class="hero1">
+      <img src="JURNAL.png" alt="Gambar SMA">
+    </div>
+
+    <h1>Pesan Anonymous</h1>
+    <form id="formInput">
+      <input type="text" id="nama" placeholder="Tulis Anonymous" required>
+      <textarea id="isiPesan" placeholder="Tulis pesan anda disini..." rows="4" required></textarea><br>
+      <button type="button" onclick="submitData('Masalah')">Kirim</button>
+    </form>
+  </section>
+
+ 
+  
+  <!-- SELECTION LOGINNYA KALAU MAU KE ADMIN -->
+  <section id="login" class="container">
+    <h1>Login Admin</h1>
+    <form onsubmit="event.preventDefault(); loginAdmin();">
+      <input type="text" id="adminUsername" placeholder="Username" required>
+      <input type="password" id="adminPassword" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p id="loginError" style="color:red;text-align:center;margin-top:10px;"></p>
+  </section>
+
+
+
+<!-- FOOTER NYA YANG DIBAGIAN BAWAH -->
+<footer>
+  &copy; <B>Website Anonymous Message Azizul</B>
+</footer>
+
+
+  <!-- SCRIPT NYA SEKALIGUS LINK LINK NYA -->
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwZB2wjBMwl5hGStQAJmWEF_0s6Zee5VH0paRYMi3iZZile4YYtZ-_-swLLk1Vn17ex/exec";
+// NAVIGASI PINDAH HALAMANNYA
+
+    function showPage(id) {
+      const sections = document.querySelectorAll('.container');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+
+      // Tutup menu saat salah satu link diklik (mode mobile)
+      const nav = document.getElementById("navLinks");
+      if (window.innerWidth <= 768) {
+        nav.classList.remove("active");
+      }
+    }
+
+    function toggleMenu() {
+      const nav = document.getElementById("navLinks");
+      nav.classList.toggle("active");
+    }
+    // SIMPAN DATA DATA YANG SUDAH DI KASIH MASUK
+function submitData(kategori) {
+  const nama = document.getElementById('nama').value;
+  const isiPesan = document.getElementById('isiPesan').value;
+
+  if (nama && isiPesan) {
+    fetch(WEB_APP_URL, {
+      method: "POST",
+      mode :"no-cors",
+      body: JSON.stringify({
+        nama: nama,
+        isiPesan: isiPesan,
+        kategori: kategori
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.text())
+    .then(data => {
+      alert('Data berhasil dikirim!');
+      document.getElementById('formInput').reset();
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      alert('Terjadi kesalahan saat mengirim data.');
+    });
+  } else {
+    alert('Mohon lengkapi semua kolom sebelum mengirim!');
+  }
+}
+
+
+
+// LOGIN ADMINNYA
+function loginAdmin() {
+  const user = document.getElementById('adminUsername').value;
+  const pass = document.getElementById('adminPassword').value;
+  if (user === 'anonazizul' && pass === '130809') {
+    window.open("https://docs.google.com/spreadsheets/d/1Fs9uVoOE2BNNzw5_aDvA3xq5fKbQ9y7dfZLD9Ee2VeA/edit?gid=0#gid=0", "_blank");
+
+  } else {
+    document.getElementById('loginError').innerText = 'Username atau password salah!';
+  }
+}
+  </script>
+
+</body>
+</html>
